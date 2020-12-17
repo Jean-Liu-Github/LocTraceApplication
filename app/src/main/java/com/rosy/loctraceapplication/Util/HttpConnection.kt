@@ -9,6 +9,7 @@ class HttpConnection {
     companion object {
         fun getHttpConnection(urlString: String): HttpURLConnection {
             val conn = URL(urlString).openConnection() as HttpURLConnection
+//            //必须在协程上或非主线程上进行connect, 否则报错
 //            conn.connect()
             return conn
         }
@@ -25,30 +26,40 @@ class HttpConnection {
         }
 
         fun postRequest(url: String, jsonString: String): String {
-            val conn = getHttpConnection(url)
-            conn.requestMethod = "POST"
-            conn.doOutput = true
-            conn.doInput = true
-            conn.useCaches = false
-            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8")
+            return requestAboutUpdate(url = url, method = "POST", jsonString = jsonString)
+        }
 
-            // 向服务端发送请求参数
-            conn.outputStream.let {
-                it.write(jsonString.toByteArray(Charsets.UTF_8))
-                it.flush()
-                it.close()
+        fun putRequest(url: String, jsonString: String): String {
+            return requestAboutUpdate(url = url, method = "PUT", jsonString = jsonString)
+        }
+
+        fun patchReqeust(url: String, jsonString: String): String {
+            return requestAboutUpdate(url = url, method = "PATCH", jsonString = jsonString)
+        }
+
+        private fun requestAboutUpdate(url: String, method: String, jsonString: String): String {
+            val conn = HttpConnection.getHttpConnection(url)
+            conn.run {
+                requestMethod = method
+                doInput = true
+                doOutput = true
+                useCaches = false
+                setRequestProperty("Content-Type", "application/json;charset=UTF-8")
             }
 
-            // 从服务端获取响应码，连接成功是200
-            val code = conn.responseCode
-            // 根据响应码获取不同输入流
-            val inStream = if (code == 200)
+            conn.outputStream.run {
+                write(jsonString.toByteArray(charset = Charsets.UTF_8))
+                flush()
+                close()
+            }
+
+            val inStream = if (conn.responseCode == 200)
                 conn.inputStream
             else
                 conn.errorStream
-            // 输入流转换成字符串
+
             val result = inStream.bufferedReader().readText()
-            conn.disconnect() //断开连接
+            conn.disconnect()
             return result
         }
     }
