@@ -11,6 +11,6 @@ class HandleLocationImpl : HandleLocation {
     }
 
     override fun updateMyLocation() {
-        TODO("Not yet implemented")
+
     }
 }

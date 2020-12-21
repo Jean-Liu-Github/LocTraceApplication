@@ -5,62 +5,60 @@ import android.util.Log
 import java.net.HttpURLConnection
 import java.net.URL
 
-class HttpConnection {
-    companion object {
-        fun getHttpConnection(urlString: String): HttpURLConnection {
-            val conn = URL(urlString).openConnection() as HttpURLConnection
+object HttpConnection {
+    fun getHttpConnection(urlString: String): HttpURLConnection {
+        val conn = URL(urlString).openConnection() as HttpURLConnection
 //            //必须在协程上或非主线程上进行connect, 否则报错
 //            conn.connect()
-            return conn
+        return conn
+    }
+
+    fun getRequest(url: String): String {
+        val resp: String
+        val conn = getHttpConnection(url)
+        conn.requestMethod = "GET"
+        conn.inputStream.use {
+            resp = it.bufferedReader().readText()
+        }
+        conn.disconnect()
+        return resp
+    }
+
+    fun postRequest(url: String, jsonString: String): String {
+        return requestAboutUpdate(url = url, method = "POST", jsonString = jsonString)
+    }
+
+    fun putRequest(url: String, jsonString: String): String {
+        return requestAboutUpdate(url = url, method = "PUT", jsonString = jsonString)
+    }
+
+    fun patchReqeust(url: String, jsonString: String): String {
+        return requestAboutUpdate(url = url, method = "PATCH", jsonString = jsonString)
+    }
+
+    private fun requestAboutUpdate(url: String, method: String, jsonString: String): String {
+        val conn = getHttpConnection(url)
+        conn.run {
+            requestMethod = method
+            doInput = true
+            doOutput = true
+            useCaches = false
+            setRequestProperty("Content-Type", "application/json;charset=UTF-8")
         }
 
-        fun getRequest(url: String): String {
-            val resp: String
-            val conn = getHttpConnection(url)
-            conn.requestMethod = "GET"
-            conn.inputStream.use {
-                resp = it.bufferedReader().readText()
-            }
-            conn.disconnect()
-            return resp
+        conn.outputStream.run {
+            write(jsonString.toByteArray(charset = Charsets.UTF_8))
+            flush()
+            close()
         }
 
-        fun postRequest(url: String, jsonString: String): String {
-            return requestAboutUpdate(url = url, method = "POST", jsonString = jsonString)
-        }
+        val inStream = if (conn.responseCode == 200)
+            conn.inputStream
+        else
+            conn.errorStream
 
-        fun putRequest(url: String, jsonString: String): String {
-            return requestAboutUpdate(url = url, method = "PUT", jsonString = jsonString)
-        }
-
-        fun patchReqeust(url: String, jsonString: String): String {
-            return requestAboutUpdate(url = url, method = "PATCH", jsonString = jsonString)
-        }
-
-        private fun requestAboutUpdate(url: String, method: String, jsonString: String): String {
-            val conn = HttpConnection.getHttpConnection(url)
-            conn.run {
-                requestMethod = method
-                doInput = true
-                doOutput = true
-                useCaches = false
-                setRequestProperty("Content-Type", "application/json;charset=UTF-8")
-            }
-
-            conn.outputStream.run {
-                write(jsonString.toByteArray(charset = Charsets.UTF_8))
-                flush()
-                close()
-            }
-
-            val inStream = if (conn.responseCode == 200)
-                conn.inputStream
-            else
-                conn.errorStream
-
-            val result = inStream.bufferedReader().readText()
-            conn.disconnect()
-            return result
-        }
+        val result = inStream.bufferedReader().readText()
+        conn.disconnect()
+        return result
     }
 }

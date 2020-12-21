@@ -5,9 +5,7 @@ import com.rosy.loctraceapplication.Service.LocationService.HandleLocationImpl
 import com.rosy.loctraceapplication.Service.UserService.HandleUser
 import com.rosy.loctraceapplication.Service.UserService.HandleUserImpl
 
-class Client {
-    companion object {
-        val handleUser = HandleUserImpl()
-        val handleLocation = HandleLocationImpl()
-    }
+object Client {
+    val handleUser = HandleUserImpl()
+    val handleLocation = HandleLocationImpl()
 }
