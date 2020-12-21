@@ -9,6 +9,10 @@ object JSON {
         return JSON.toJSONString(obj)
     }
 
+    fun JSONObject.toJsonString(): String {
+        return JSON.toJSONString(this)
+    }
+
     fun <T : Any> toObject(jsonString: String, kotlinClass: KClass<T>): T {
         return JSON.parseObject(jsonString, kotlinClass.java)
     }
@@ -23,5 +27,9 @@ object JSON {
 
     fun <T : Any> toObject(jsonObject: JSONObject, kotlinClass: KClass<T>): T {
         return JSON.parseObject(JSON.toJSONString(jsonObject), kotlinClass.java)
+    }
+
+    fun <T : Any> String.getData(kotlinClass: KClass<T>): T {
+        return toObject(this.toJsonObject()["data"] as JSONObject, kotlinClass)
     }
 }
