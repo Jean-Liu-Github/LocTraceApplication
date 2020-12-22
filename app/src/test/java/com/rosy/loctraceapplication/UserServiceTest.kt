@@ -1,7 +1,6 @@
 package com.rosy.loctraceapplication
 
-import android.view.ViewDebug
-import com.rosy.loctraceapplication.Client.Client
+import com.rosy.loctraceapplication.client.Client
 import org.junit.Test
 
 class UserServiceTest {
@@ -12,6 +11,6 @@ class UserServiceTest {
 
     @Test
     fun test_get_register_users() {
-        println(Client.handleUser.getRegisteUser())
+        println(Client.handleUser.getRegisterUser())
     }
 }

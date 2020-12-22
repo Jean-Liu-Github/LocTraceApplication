@@ -1,4 +1,4 @@
-package com.rosy.loctraceapplication.Util
+package com.rosy.loctraceapplication.util
 
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject

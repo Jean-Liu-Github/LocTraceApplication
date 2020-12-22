@@ -1,6 +1,6 @@
-package com.rosy.loctraceapplication.Util
+package com.rosy.loctraceapplication.util
 
-import com.rosy.loctraceapplication.Util.JSON.toJsonObject
+import com.rosy.loctraceapplication.util.JSON.toJsonObject
 import kotlin.reflect.KClass
 
 object Response {

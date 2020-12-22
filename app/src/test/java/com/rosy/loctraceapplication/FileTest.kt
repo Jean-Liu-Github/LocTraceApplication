@@ -1,6 +1,6 @@
 package com.rosy.loctraceapplication
 
-import com.rosy.loctraceapplication.Util.File
+import com.rosy.loctraceapplication.util.File
 import com.rosy.loctraceapplication.data.user.User
 import org.junit.Test
 

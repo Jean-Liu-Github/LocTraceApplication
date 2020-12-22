@@ -1,4 +1,4 @@
-package com.rosy.loctraceapplication.Service.LocationService
+package com.rosy.loctraceapplication.service.LocationService
 
 const val HTTP = "http://"
 const val HOST = "localhost"

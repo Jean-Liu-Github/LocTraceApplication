@@ -1,7 +1,5 @@
-package com.rosy.loctraceapplication.Util
+package com.rosy.loctraceapplication.util
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import java.net.HttpURLConnection
 import java.net.URL
 

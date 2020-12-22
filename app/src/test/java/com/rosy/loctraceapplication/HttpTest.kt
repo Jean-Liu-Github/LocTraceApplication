@@ -1,8 +1,8 @@
 package com.rosy.loctraceapplication
 
-import com.rosy.loctraceapplication.Util.HttpConnection
-import com.rosy.loctraceapplication.Util.JSON
-import com.rosy.loctraceapplication.Util.Response
+import com.rosy.loctraceapplication.util.HttpConnection
+import com.rosy.loctraceapplication.util.JSON
+import com.rosy.loctraceapplication.util.Response
 import com.rosy.loctraceapplication.data.location.Location
 import com.rosy.loctraceapplication.data.location.UserLocation
 import com.rosy.loctraceapplication.data.user.User
