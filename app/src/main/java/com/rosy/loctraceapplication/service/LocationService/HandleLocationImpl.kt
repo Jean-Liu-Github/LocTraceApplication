@@ -7,6 +7,10 @@ import com.rosy.loctraceapplication.util.HttpConnection
 import com.rosy.loctraceapplication.util.JSON
 import com.rosy.loctraceapplication.data.location.Location
 import com.rosy.loctraceapplication.data.location.UserLocation
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -20,6 +24,9 @@ class HandleLocationImpl : HandleLocation {
         HttpConnection.putRequest(SAVE_LOCATION, JSON.toJsonString(userLocation))
     }
 
+    override suspend fun updateLocationAsyns(userLocation: UserLocation) {
+        HttpConnection.putRequest(SAVE_LOCATION, JSON.toJsonString(userLocation))
+    }
 
     private fun myNowLocation(): UserLocation {
         return UserLocation(user = Client.handleUser.me(), location = getMyLocationByMap())
