@@ -6,4 +6,5 @@ import java.io.Serializable
 data class UserLocation(
     var user: User,
     var location: Location,
+    var allow: Boolean = false,
 ): Serializable

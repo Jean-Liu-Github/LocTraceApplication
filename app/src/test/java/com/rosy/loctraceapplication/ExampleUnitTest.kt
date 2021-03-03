@@ -14,4 +14,9 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    @Test
+    fun list_to_str() {
+        println(listOf(2,4,5).toString().trim('[', ']'))
+    }
 }

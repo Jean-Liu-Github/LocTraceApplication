@@ -14,7 +14,13 @@ object HttpConnection {
     fun getRequest(url: String): String {
         val resp: String
         val conn = getHttpConnection(url)
-        conn.requestMethod = "GET"
+        conn.run {
+            requestMethod = "GET"
+            doInput = true
+            doOutput = true
+            useCaches = false
+            setRequestProperty("Content-Type", "application/json;charset=UTF-8")
+        }
         conn.inputStream.use {
             resp = it.bufferedReader().readText()
         }

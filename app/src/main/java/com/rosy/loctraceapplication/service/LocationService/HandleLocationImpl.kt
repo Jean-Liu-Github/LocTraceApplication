@@ -7,6 +7,7 @@ import com.rosy.loctraceapplication.util.HttpConnection
 import com.rosy.loctraceapplication.util.JSON
 import com.rosy.loctraceapplication.data.location.Location
 import com.rosy.loctraceapplication.data.location.UserLocation
+import com.rosy.loctraceapplication.util.Response
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -17,7 +18,7 @@ import java.time.LocalDateTime
 class HandleLocationImpl : HandleLocation {
 
     override fun getUserLocation(user_ids: List<Int>): List<UserLocation> {
-        TODO("Not yet implemented")
+        return Response.dataList(HttpConnection.getRequest("${GET_LOCATIONS}?user_ids=${user_ids.toString().trim('[', ']').replace(" ", "")}"), UserLocation::class)
     }
 
     override fun updateLocation(userLocation: UserLocation) {
