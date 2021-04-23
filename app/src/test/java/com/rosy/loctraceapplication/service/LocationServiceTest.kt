@@ -1,4 +1,4 @@
-package com.rosy.loctraceapplication
+package com.rosy.loctraceapplication.service
 
 import com.rosy.loctraceapplication.client.Client
 import com.rosy.loctraceapplication.data.location.Location

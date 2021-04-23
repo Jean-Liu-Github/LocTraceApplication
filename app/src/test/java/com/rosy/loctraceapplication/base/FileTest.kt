@@ -1,4 +1,4 @@
-package com.rosy.loctraceapplication
+package com.rosy.loctraceapplication.base
 
 import com.rosy.loctraceapplication.util.File
 import com.rosy.loctraceapplication.data.user.User
